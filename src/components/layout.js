@@ -38,14 +38,19 @@ const Layout = ({ pageTitle, children }) => {
           </li>
           <li className={navLinkItem}>
             <Link to="/blog" className={navLinkText}>
-              Blog
+              ブログ
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/work" className={navLinkText}>
+              work
             </Link>
           </li>
         </ul>
       </nav>
       <main>
         <h1 className={heading}>{pageTitle}</h1>
-        {children}
+        {children}{/* 省略することができる。ここに何でも入れられる */}
       </main>
     </div>
   )
