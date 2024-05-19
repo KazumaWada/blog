@@ -11,15 +11,14 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-  query {
-    site {
-      siteMetadata {
-        title
+    query {
+      site {
+        siteMetadata {
+          title
+        }
       }
     }
-  }
-`)
-
+  `)
 
   return (
     <div className={container}>
@@ -38,19 +37,14 @@ const Layout = ({ pageTitle, children }) => {
           </li>
           <li className={navLinkItem}>
             <Link to="/blog" className={navLinkText}>
-              ブログ
-            </Link>
-          </li>
-          <li className={navLinkItem}>
-            <Link to="/work" className={navLinkText}>
-              work
+              Blog
             </Link>
           </li>
         </ul>
       </nav>
       <main>
         <h1 className={heading}>{pageTitle}</h1>
-        {children}{/* 省略することができる。ここに何でも入れられる */}
+        {children}
       </main>
     </div>
   )
