@@ -5,7 +5,13 @@ import Seo from '../components/seo'
 const AboutPage = () => {
   return (
     <Layout pageTitle="About Me">
-      <p>Hi, im Kazuma.</p>
+      <div>
+      <p><a href="https://github.com/KazumaWada" target="_blank">GitHub</a></p>
+      <p><a href="https://instagram.com/imnotkatsuma" target="_blank">Instagram</a></p>
+      <p>kazumawada.aus@gmail.com</p>
+      
+      </div>
+      
     </Layout>
   )
 }
