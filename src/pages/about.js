@@ -6,6 +6,7 @@ const AboutPage = () => {
   return (
     <Layout pageTitle="About Me">
       <div>
+      {/* <p>(i want to be a) software enginner.</p> */}
       <p><a href="https://github.com/KazumaWada" target="_blank">GitHub</a></p>
       <p><a href="https://instagram.com/imnotkatsuma" target="_blank">Instagram</a></p>
       <p>kazumawada.aus@gmail.com</p>

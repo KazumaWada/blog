@@ -5,7 +5,7 @@
 }
 
 .heading {
-  color: rebeccapurple;
+  color: black;
 }
 .nav-links {
   display: flex;
@@ -25,3 +25,4 @@
   font-weight: 700;
   margin: 3rem 0;
 }
+
