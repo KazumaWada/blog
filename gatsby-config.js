@@ -7,6 +7,9 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     {
+      resolve: "gatsby-plugin-netlify-cms"
+    },
+    {
       resolve: "gatsby-source-filesystem",
       options: {
         name: `blog`,
