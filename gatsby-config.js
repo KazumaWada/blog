@@ -1,14 +1,11 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://kazumawada.org",
+    siteUrl: "https://www.yourdomain.tld",
     title: "KAZUMA WADA",
   },
   plugins: [
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
-    {
-      resolve: "gatsby-plugin-netlify-cms"
-    },
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -16,34 +13,7 @@ module.exports = {
         path: `${__dirname}/blog`,
       }
     },
-    // "gatsby-plugin-mdx",
+    "gatsby-plugin-mdx",
     "gatsby-transformer-sharp",
-    //put image inside of mdx file
-    // {
-    //   resolve: `gatsby-transformer-remark`,
-    //   options: {
-    //     plugins: [
-    //       {
-    //         resolve: `gatsby-remark-images`,
-    //         options: {
-    //           maxWidth: 800,
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
-    {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        gatsbyRemarkPlugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 1200,
-            },
-          },
-        ],
-      },
-    },
   ],
 };
