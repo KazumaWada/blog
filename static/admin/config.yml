@@ -1,18 +1,39 @@
+# backend:
+#   name: github
+#   repo: kazumawada/blog
+#   branch: main
+
+# media_folder: static/assets
+# public_folder: /assets
+
+# collections:
+#   - name: blog
+#     label: Blog
+#     folder: blog
+#     create: true
+#     fields:
+#       - { name: path, label: Path }
+#       - { name: date, label: Date, widget: datetime }
+#       - { name: title, label: Title }
+#       - { name: body, label: Body, widget: markdown }
 backend:
   name: github
   repo: kazumawada/blog
   branch: main
 
-media_folder: static/assets
-public_folder: /assets
+media_folder: "" # media_folderは空にするか相対パスを使用
+public_folder: "" # public_folderも空にするか相対パスを使用
 
 collections:
-  - name: blog
-    label: Blog
-    folder: blog
-    create: true
+  - name: "blog"
+    label: "Blog"
+    folder: "blog" # 記事フォルダの親フォルダ
+    create: true # 新しい記事フォルダを作成できるようにする
+    slug: "{{slug}}" # 記事フォルダ名
+    path: "{{slug}}/index.mdx" # 記事のパスをフォルダ名/ファイル名に設定する
     fields:
-      - { name: path, label: Path }
-      - { name: date, label: Date, widget: datetime }
-      - { name: title, label: Title }
-      - { name: body, label: Body, widget: markdown }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Hero Image", name: "hero_image", widget: "image", required: false }
+      - { label: "Slug", name: "slug", widget: "string" }
