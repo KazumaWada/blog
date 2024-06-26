@@ -3,6 +3,7 @@ import { Link, graphql } from 'gatsby'
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
 
+
 const BlogPage = ({ data }) => {
   return (
     <Layout pageTitle="Blog">
@@ -10,8 +11,8 @@ const BlogPage = ({ data }) => {
         data.allMdx.nodes.map(node => (
           <article key={node.id}>
             <h2>
-              {/* <Link style={{ textDecoration: 'none' } to={`/blog/${node.frontmatter.slug}`}> */}
-              <Link style={{ textDecoration: 'none' }} to={`/blog/${node.frontmatter.slug}`}>
+              <Link style={{ textDecoration: 'none', color: '#337ab7' }} to={`/blog/${node.frontmatter.slug}`}>
+                {/* title */}
                 {node.frontmatter.title}
               </Link>
               <p style={{ fontSize: '12px', color: "gray" }}>{node.frontmatter.date}</p>
