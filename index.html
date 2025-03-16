@@ -17,20 +17,26 @@
   <span class="text-xl font-bold pr-2 hover:text-gray-500"><a target="_blank" href="https://zenn.dev/kazumawada">技術記事</a></span>
   <span class="text-xl font-bold pr-2 hover:text-gray-500"><a target="_blank" href="https://kazumawada.github.io">ポートフォリオ</a></span>
  </div>
- <p class=""></p>
-</div>
- <p class="text-gray-500 text-xl font-medium">開発中のサイト: <a class="hover:text-gray-400" target="_blank" href="https://eigopencil.com">eigopencil.com</a> / <a class="hover:text-gray-400" target="_blank" href="https://github.com/kazumawada/eigopencil">ソースコード</a></p>
-</div>
 
  </div>
 
 
+<div class="container mt-10">
 
- <div class="m-4 p-5 rounded-lg">
+ <div class="m-4 p-5 rounded-lg dulation-200">
   {% for post in collections.posts %}<!--text-gray-800 -->
-  <h2 class="font-semibold text-xl visited:text-purple-600 m-1"><a href="{{ post.url }}">{{post.data.title}}</a></h2>
+
+  <div class="fix justify-center">
+   <span class="text-left text-gray-400 text-sm pr-2">{{post.data.date}}</span>
+   <span class="text-blue-600 font-semibold text-xl"><a href="{{ post.url }}">{{post.data.title}}</a></span>
+  </div>
+ 
+
   {% endfor %}
   </div>
+
+</div>
+
 
 
 
