@@ -1,0 +1,21 @@
+<h1>11ty syntax hightlight</h1>
+<p>https://www.11ty.dev/docs/plugins/syntaxhighlight/</p>
+<p>eleventy.config.jsが必要。
+どこに書く?
+↓ root</p>
+<blockquote>
+<p>Configuration files are optional. Add an eleventy.config.js file to the root directory of your project
+https://www.11ty.dev/docs/config/</p>
+</blockquote>
+<p>で、
+https://www.11ty.dev/docs/plugins/syntaxhighlight/に戻ると、
+npm install @11ty/eleventy-plugin-syntaxhighlight</p>
+<p>importでエラーがあった。</p>
+<blockquote>
+<p>package.jsonの&quot;type&quot;: &quot;module&quot;が原因だった。Node.js のプロジェクトにおける package.json の設定の一部で、ESモジュール（ECMAScript Modules） を使用することを示しています。この設定により、Node.js はファイルを ESモジュール として解釈し、モジュールのインポート/エクスポートに import と export 構文を使うことができます。</p>
+</blockquote>
+<p>こっからデザインも選べる
+https://github.com/PrismJS/prism-themes</p>
+<h2>改行した分だけ改行できる。</h2>
+<p>https://github.com/markdown-it/markdown-it#init-with-presets-and-options
+https://www.11ty.dev/docs/languages/markdown/</p>

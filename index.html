@@ -26,9 +26,9 @@
  <div class="m-4 p-5 rounded-lg dulation-200">
   {% for post in collections.posts %}<!--text-gray-800 -->
 
-  <div class="fix justify-center">
-   <span class="text-left text-gray-400 text-sm pr-2">{{post.data.date}}</span>
-   <span class="text-blue-600 font-semibold text-xl"><a href="{{ post.url }}">{{post.data.title}}</a></span>
+  <div class="text-left mt-3">
+   <p class="text-xs font-medium text-gray-500 ring-gray-500/10">{{post.data.date}}</p>
+   <p class="text-blue-600 font-semibold text-xl"><a href="{{ post.url }}">{{post.data.title}}</a></p>
   </div>
  
 

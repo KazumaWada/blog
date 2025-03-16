@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0"
+  }
+}

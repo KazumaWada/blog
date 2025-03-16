@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link
+ href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"
+ rel="stylesheet"
+/>
+ <title>Kazuma Wada</title>
+</head>
+<body>
+ <a href="/">←</a>
+
+ <div class="text-center">
+  <h1 class="font-normal text-4xl m-4">eigopencil.comというサイトを作りました。</h1>
+  <h1 class="font-bold text-sm mb-10 text-gray-500">2025-01-16</h1>
+  <h1>アプリケーションの説明</h1>
+<p>eigopencil.comは、英語のライティングができるスペースを提供します。</p>
+<h1>なぜこれを作ったか</h1>
+<p>自分の英語力向上のために開発しました。</p>
+<h1>サイトURL,README</h1>
+<p>https://eigopencil.com/question
+https://github.com/KazumaWada/eigopencil#eigopencilcom</p>
+<h1>使用技術</h1>
+<p>フロントエンド: HTML/CSS/Tailwind CSS
+バックエンド: Ruby on Rails
+データベース: PostgreSQL
+インフラ: Docker
+デプロイに使用したソフトウェア: Render</p>
+<h1>実装した機能一覧</h1>
+<ul>
+<li>CRUD機能</li>
+<li>Cookie</li>
+<li>投稿時の太字、改行</li>
+<li>投稿日をカレンダーで確認 (追記: デザインをシンプルにするために削除しました)</li>
+<li>下書き保存</li>
+<li>リッチテキストエディタ(https://quilljs.com/)</li>
+<li>xシェア機能 (作成した投稿をワンクリックでXに共有)</li>
+<li>手書き認識機能 (手書きの文字を画像から認識し、テキスト化 (rtesseract / MiniMagick 使用))</li>
+</ul>
+<h1>こだわったところ</h1>
+<h4>フレンドリーなURL:</h4>
+<p>通常のルート: eigopencil.com/users/1
+フレンドリーURL: eigopencil.com/kazuma
+ユーザーがプロファイルをシェアすることを想定して、friendly_id gem を活用し見やすく親しみやすいURLにカスタマイズしました。</p>
+<h4>直感的なUI/UX:</h4>
+<p>Xの青丸い投稿ボタンを参考にして、自分のアプリにも取り入れました。</p>
+<h4>画像処理の工夫:</h4>
+<p>rtesseractだけでは画像を文字列に変えたときに上手く読み込めていなかったので、MiniMagick を用いて処理前の画像の補正を行い、手書き認識率を向上。</p>
+<h1>実装中に起こった問題とその解決策</h1>
+<h4>ドメイン名</h4>
+<p>作り始めた当初は、一日一行英語をアウトプットするというコンセプトで、onedayoneline.comというドメインを取得しようとしていました。しかし、その名前がしっくりきませんでした。</p>
+<p>なぜかというと、英語をアウトプットする場所を提供するアプリなので、EnglishやEigo、pen, write、jornalなどのワードが入っていた方がユーザーがパッとみた時に「何となくこんなアプリなんだろうな」と想像できた方が、ユーザーがすぐに理解して試してくれると思ったからです。onedayonelineと言う文字を見ても使う側はどんなアプリかイメージが湧かないだろうなと考えていました。</p>
+<p>考えた結果、eigoとpencilを繋げてeigopencil.comにすることにしました。それに合わせてアプリのアイコンも視覚的にパッとみてすぐわかるような&quot;✏️&quot;にしました。</p>
+<p>この変更に伴い、1行(one line)ということでPostモデルのcontentの最大文字数を50字ほどに制限していたのですが、それを無くしてユーザーがもっと自由にアウトプットできるように最大文字数を1000字にしました。1000字という基準は自分が使う場合は、それくらいの文字数で足りたからです。
+https://eigopencil.com/how_i_use</p>
+<h4>画像認識機能の実装</h4>
+<p>rtesseract(OCR)を使用して画像を認識しましたが、あまりにも精度が良くなかったので、画像処理の前にMiniMagickで補正してからrtesseractにデータを投げることにしました。
+しかし、mini_magicで補正されたファイルをrtesseractに投げるとなぜかファイルが消えてしまうという事態が発生しました。</p>
+<p>定義したpathが悪かったのか、.jpgや.webpなどの形式がよくなかったのかなど仮説を立てて解決しようとしましたが、原因はそれらではありませんでした。</p>
+<p>ChatGPTに「mini_magicで一度に色んな加工(画像のサイズ変更、ノイズ除去、傾き補正など)を画像に施しているから処理に時間がかかったり中断したりして上手くいかないのでは?」と言われいくつかの処理が終わるごとに一度変数に格納してから、次の処理へというように直してみると、無事データがrtesseractに渡すことができました。</p>
+<pre class="language-ruby"><code class="language-ruby">  <span class="token keyword">def</span> <span class="token method-definition"><span class="token function">analyze</span></span>
+    uploaded_file <span class="token operator">=</span> params<span class="token punctuation">[</span><span class="token symbol">:image</span><span class="token punctuation">]</span>
+  
+    <span class="token keyword">if</span> uploaded_file<span class="token punctuation">.</span><span class="token keyword">nil</span><span class="token operator">?</span>
+      flash<span class="token punctuation">[</span><span class="token symbol">:alert</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"画像をアップロードしてください。"</span></span>
+      redirect_to current_user
+      <span class="token keyword">return</span>
+    <span class="token keyword">end</span>
+
+    <span class="token comment">#app/tmpにユーザー画像を保存</span>
+    saved_tmp_path <span class="token operator">=</span> Rails<span class="token punctuation">.</span>root<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'tmp'</span></span><span class="token punctuation">,</span> uploaded_file<span class="token punctuation">.</span>original_filename<span class="token punctuation">)</span><span class="token punctuation">.</span>to_s
+    <span class="token builtin">File</span><span class="token punctuation">.</span>open<span class="token punctuation">(</span>saved_tmp_path<span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">'wb'</span></span><span class="token punctuation">)</span> <span class="token keyword">do</span> <span class="token operator">|</span>file<span class="token operator">|</span>
+      file<span class="token punctuation">.</span>write<span class="token punctuation">(</span>uploaded_file<span class="token punctuation">.</span>read<span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+
+    <span class="token comment">#処理するファイルのpathを定義 app/tmp</span>
+    tmp_path <span class="token operator">=</span> Rails<span class="token punctuation">.</span>root<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'tmp'</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"processed_</span><span class="token interpolation"><span class="token delimiter punctuation">#{</span><span class="token content">SecureRandom<span class="token punctuation">.</span>hex<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span></span><span class="token delimiter punctuation">}</span></span><span class="token string">.png"</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span>to_s
+    processed_image_path <span class="token operator">=</span> HandwritingRecognizer<span class="token punctuation">.</span>preprocess_image<span class="token punctuation">(</span>saved_tmp_path<span class="token punctuation">,</span> tmp_path<span class="token punctuation">)</span>
+    <span class="token comment">#lib/handwriting_recognizer.rbでpre処理(RTesseractで画像を処理しやすくする)</span>
+    image <span class="token operator">=</span> <span class="token class-name">RTesseract</span><span class="token punctuation">.</span><span class="token keyword">new</span><span class="token punctuation">(</span>processed_image_path<span class="token punctuation">,</span> <span class="token symbol">lang</span><span class="token operator">:</span> <span class="token string-literal"><span class="token string">'eng'</span></span><span class="token punctuation">)</span>
+    ocr_result <span class="token operator">=</span> image<span class="token punctuation">.</span>to_s
+    <span class="token comment">#render json: { text: ocr_result } </span>
+    <span class="token comment">#render html: "&lt;p>#{ocr_result}&lt;/p>".html.safe</span>
+    redirect_to camera_path<span class="token punctuation">(</span><span class="token symbol">slug</span><span class="token operator">:</span> current_user<span class="token punctuation">.</span>slug<span class="token punctuation">,</span> <span class="token symbol">ocr_result</span><span class="token operator">:</span> ocr_result<span class="token punctuation">)</span>
+  <span class="token keyword">end</span></code></pre>
+<pre class="language-ruby"><code class="language-ruby"><span class="token keyword">require</span> <span class="token string-literal"><span class="token string">'mini_magick'</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">HandwritingRecognizer</span>
+  <span class="token keyword">def</span> <span class="token method-definition"><span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">preprocess_image</span></span><span class="token punctuation">(</span>input_path<span class="token punctuation">,</span> output_path<span class="token punctuation">)</span>
+    Rails<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>debug <span class="token string-literal"><span class="token string">"Starting image preprocessing..."</span></span>
+    image <span class="token operator">=</span> MiniMagick<span class="token double-colon punctuation">::</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>input_path<span class="token punctuation">)</span>
+  
+    <span class="token comment"># サイズ縮小</span>
+    image<span class="token punctuation">.</span>resize <span class="token string-literal"><span class="token string">'1200x1200>'</span></span>
+    image<span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string-literal"><span class="token string">'png'</span></span><span class="token punctuation">)</span>
+    image<span class="token punctuation">.</span>write<span class="token punctuation">(</span>output_path<span class="token punctuation">)</span>
+  
+    <span class="token comment"># ノイズ除去</span>
+    image <span class="token operator">=</span> MiniMagick<span class="token double-colon punctuation">::</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>output_path<span class="token punctuation">)</span>
+    image<span class="token punctuation">.</span>morphology <span class="token string-literal"><span class="token string">'Erode'</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">'Diamond'</span></span>
+  
+    <span class="token comment"># 傾き補正</span>
+    image<span class="token punctuation">.</span>deskew <span class="token string-literal"><span class="token string">'40%'</span></span>
+    image<span class="token punctuation">.</span>morphology <span class="token string-literal"><span class="token string">'Close'</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">'Octagon'</span></span>
+  
+    <span class="token comment"># 最終出力</span>
+    image<span class="token punctuation">.</span>write<span class="token punctuation">(</span>output_path<span class="token punctuation">)</span>
+    Rails<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>debug <span class="token string-literal"><span class="token string">"Image preprocessing completed. Output: </span><span class="token interpolation"><span class="token delimiter punctuation">#{</span><span class="token content">output_path</span><span class="token delimiter punctuation">}</span></span><span class="token string">"</span></span>
+    output_path
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span></code></pre>
+<h4>bootstrapからTailwindCSSへの切り替え</h4>
+<p>「今までbootstrapを使っていて慣れていたから」という理由でbootstrapを使っていましたが、今風のモダンなデザインのアプリと比べて見た目が古いと思い、TailwindCSSに途中から切り替えました。開発に余計に時間がかかってしまうのが嫌だったので、CDNで取り込みました。</p>
+<h4>普通のformタグからリッチなテキストエディタ(trix)の追加をしようとしたが、</h4>
+<p>「ただ文字を投稿するのではなく、ユーザーが画像を挿入できたり、太字にできたりできたら便利そう」と思い、追加しようと思いました。</p>
+<p>そして、今までJavaScriptを使わずに一通り完成させたのですが、Rails7でリッチなテキストエディタを実装するにはhotwire(turboとstimulus)を活用してJavaScriptを取り込む必要がありました。3日間使ってもJavaScriptをブラウザに表示させることができず苦戦していました。</p>
+<p>さらに調べたところ、画像や文字の装飾ができるリッチなデータをDBで管理するには、無料枠のrenderだけではできない事が分かりました。</p>
+<p>「このリッチなテキストエディタの実装にこれ以上時間を割けない」、「その後の管理も理解していないと大変そう」「デプロイに新しい設定をすると余計に時間がかかる」と予想し、自分でリッチなテキストエディタをviewのファイルに直接scriptタグで書いて行く事にしました。(と言っても太字だけです。)</p>
+<h1>得た学び</h1>
+<h4>まずはシンプルなCRUDを完成させてリリースしてみる</h4>
+<p>アプリケーションを開発していると、「この機能も欲しい」「もっとこういうデザインの方が使いやすいかも」という考えが半永久的に出てきます。しかし、まずはリリースしないと先に進まないので、リッチテキストやRails7での推奨されているJavaScriptの導入方法など時間がかかりそうなものは一旦飛ばしました。</p>
+<p>また、自分はこうした方が良いと思ったデザインや機能に凝って時間を使っても、ユーザーが「必要ない」と感じていたら本末転倒だと感じたので、とりあえず簡単ですぐに実装できるやり方で機能を実装しました。</p>
+<h4>構成を決めても、書いてみないとどうなるか分からない</h4>
+<p>作り始めの段階で自分の技術力や時間を考慮して「どんな機能をつけるのか」や「デザインするツールは何を使うのか」などを決めていたのですが、作り始めてみると経験不足のためなのか、そもそも自分が考慮していなかった問題が出てきました。</p>
+<ul>
+<li>デフォルトのユーザーパスが/users/1になっていたり(users/1と書かれているサイトは今までみた事がない。/users.nameに変える必要があるなとか。)</li>
+<li>「下書き機能はどうやって実装するんだろう」と思っても@post.publishedと@post.draftで分ければ意外とすんなりと実装できたり、</li>
+<li>「カメラ認識機能なんてどうやって実装するんだろう」と思いましたが、公式を落ち着いて見れば先人が数行のコードで実装できるようにしていてくれたり、</li>
+<li>Rails7にJavaScriptを推奨されている方法(Hotwire)でインストールするのが、自分にとってここまで難しいと感じるのかなど、</li>
+</ul>
+<p>「作り始めるときには全てを考慮してから実装するのは難しいから、とりあえず作り始めてから考えよう」と思うようになりました。</p>
+<h4>自分に必要なアプリだとリリースまで粘れる。継続してメンテナンスをしたいと思うようになる。</h4>
+<p>自分が欲しいツールをアプリとして落とし込んで作成したので、今やっている事に納得感を持ってリリースまで辿り着けました。</p>
+<p>その他に学んだことのノート(https://scrapbox.io/kazdb/eigopencil)</p>
+<h1>これから実装/改善する機能</h1>
+<p>ユーザーが増えてきたら考えます。</p>
+
+ </div>
+ 
+</body>
+</html>
