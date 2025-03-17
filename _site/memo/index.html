@@ -1,21 +1,55 @@
 <h1>11ty syntax hightlight</h1>
-<p>https://www.11ty.dev/docs/plugins/syntaxhighlight/</p>
-<p>eleventy.config.jsが必要。
-どこに書く?
+<p><a href="https://www.11ty.dev/docs/plugins/syntaxhighlight/">https://www.11ty.dev/docs/plugins/syntaxhighlight/</a></p>
+<p>eleventy.config.jsが必要。<br>
+どこに書く?<br>
 ↓ root</p>
 <blockquote>
-<p>Configuration files are optional. Add an eleventy.config.js file to the root directory of your project
-https://www.11ty.dev/docs/config/</p>
+<p>Configuration files are optional. Add an eleventy.config.js file to the root directory of your project<br>
+<a href="https://www.11ty.dev/docs/config/">https://www.11ty.dev/docs/config/</a></p>
 </blockquote>
-<p>で、
-https://www.11ty.dev/docs/plugins/syntaxhighlight/に戻ると、
+<p>で、<br>
+<a href="https://www.11ty.dev/docs/plugins/syntaxhighlight/%E3%81%AB%E6%88%BB%E3%82%8B%E3%81%A8%E3%80%81">https://www.11ty.dev/docs/plugins/syntaxhighlight/に戻ると、</a><br>
 npm install @11ty/eleventy-plugin-syntaxhighlight</p>
 <p>importでエラーがあった。</p>
 <blockquote>
 <p>package.jsonの&quot;type&quot;: &quot;module&quot;が原因だった。Node.js のプロジェクトにおける package.json の設定の一部で、ESモジュール（ECMAScript Modules） を使用することを示しています。この設定により、Node.js はファイルを ESモジュール として解釈し、モジュールのインポート/エクスポートに import と export 構文を使うことができます。</p>
 </blockquote>
-<p>こっからデザインも選べる
-https://github.com/PrismJS/prism-themes</p>
+<p>こっからデザインも選べる<br>
+<a href="https://github.com/PrismJS/prism-themes">https://github.com/PrismJS/prism-themes</a></p>
 <h2>改行した分だけ改行できる。</h2>
-<p>https://github.com/markdown-it/markdown-it#init-with-presets-and-options
-https://www.11ty.dev/docs/languages/markdown/</p>
+<p><a href="https://github.com/markdown-it/markdown-it#init-with-presets-and-options">https://github.com/markdown-it/markdown-it#init-with-presets-and-options</a><br>
+<a href="https://www.11ty.dev/docs/languages/markdown/">https://www.11ty.dev/docs/languages/markdown/</a></p>
+<h1>markdown-itは、defaultで入ってる。</h1>
+<p>でも、markdown-itで、2回改行したら2行空くのは入っているのか?<br>
+だって何回改行しても一つしか改行されないから。<br>
+英語で、Line Breakと呼ばれているmdの機能</p>
+<p>ここみる。<br>
+<a href="https://github.com/markdown-it/markdown-it#init-with-presets-and-options">https://github.com/markdown-it/markdown-it#init-with-presets-and-options</a></p>
+<ul>
+<li>そもそも11tyは最初からLiquidテンプレートとして前処理されている。それを変えることもできる。</li>
+</ul>
+<p>npm liquid -&gt; とかで組み込めるテンプレートエンジンのこと。</p>
+<h2>続き</h2>
+<ul>
+<li>
+<p>デフォルトで、makedown-itを使っているが、その項目でbreakがfalseに<br>
+試しに、デフォルトでmakedown-itを使っているが、それをconfig内に取り込んで、一応自分でbreakをアレンジしてみたけど、うまくいかなかった。</p>
+</li>
+<li>
+<p>liquidの中にmarkdown-itが入っていると思う。</p>
+</li>
+</ul>
+<p>↓これで検索してみる。</p>
+<p>良さげな検索ワード:<br>
+markdown blank line p tag</p>
+<p>markeit-downのソースコードに直接アクセスできるか</p>
+<blockquote>
+<p>If your Markdown compiler supports HTML, you can add &lt;br/&gt;&lt;br/&gt; in the Markdown source.</p>
+</blockquote>
+<p>markdown-itのdocは、多分こう書いてあるから、一行の改行のみだと思う。</p>
+<pre class="language-md"><code class="language-md">  // Convert '\n' in paragraphs into <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span>
+  breaks:       false,</code></pre>
+<p>じゃあ、直接自分で作ったりするしかないのかな??</p>
+<p>通常のマークダウンのプラグインでは、複数改行はないことになっている。デフォルトでただの改行だけ。</p>
+<h1>お！</h1>
+<p>markdown-it-bracketed-spans</p>
