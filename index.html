@@ -11,8 +11,8 @@
 <div id="profile-container" class="m-5 text-center">
 
 <div id="profile" class="">
- <h1 class="font-bold text-4xl">Kazuma Wada</h1>
- <div class="flex justify-center mt-5">
+ <h1 class="font-bold text-4xl">kazumawada.com</h1>
+ <div class="flex justify-center mt-10">
   <!-- <span class="text-xl font-bold pr-2 hover:text-gray-500"><a target="_blank" href="https://note.com/imnotkatsuma">note</a></span>
   <span><img src="./_site/ img/note.png" alt="" width="30"></span> -->
   <!--<span class="text-xl font-bold pr-2 hover:text-gray-500"><a target="_blank" href="https://github.com/kazumawada">GitHub</a></span>
@@ -24,8 +24,45 @@
  </div>
 
 
-<div class="container mt-10">
+ <!-- index -->
+ <div class="text-left mb-2">
+  <h2 class="mb-2">最近の活動:</h2>
+  <div class="bg-blue-100 p-4">
+   <p>📘「ホステル日記」の<a class="text-blue-600" href="https://readhostel.vercel.app/posts/Auckland/%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%E5%AF%BF%E5%8F%B8%E3%82%A2%E3%82%A4%E3%83%87%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%83%BC">コーヒー寿司アイデンティティー</a>を書きました</p>
+   <p>📘英語学習サイト<a class="text-blue-600" href="eigopencil.com">eigopencil</a>もう少しでリリースできそうです</p>
+  </div>
+ </div>
 
+ <!-- link -->
+ <div class="text-left mb-2">
+  <h2 class="mb-2">創作物:</h2>
+
+  <div class="flex bg-white p-4 rounded-lg shadow items-center space-x-4">
+    <img src="./_site/ img/readhostel.png" class="w-10 h-10" alt="icon">
+    <div>
+      <a href="https://readhostel.vercel.app"><h3 class="text-blue-600 font-semibold">ホステル日記</h3></a>
+      <p class="text-sm text-gray-600">海外のホステルに約2年間住んだ体験を文章にしてまとめたもの。</p>
+    </div>
+  </div> 
+
+
+  <div class="flex bg-white p-4 rounded-lg shadow items-center space-x-4">
+    <img src="./_site/ img/eigopencil.png" class="w-10 h-10" alt="icon">
+    <div>
+      <a href="https://eigopencil.com"><h3 class="text-blue-600 font-semibold">eigopencil.com</h3></a>
+      <p class="text-sm text-gray-600">英語学習サイト。単語フレーズの管理ができます。</p>
+    </div>
+  </div> 
+  
+  
+  
+ 
+ </div>
+
+
+ <!-- blog -->
+<div class="container mt-10">
+<h2 class="text-left">blog:</h2>
  <div class="m-4 p-5 rounded-lg dulation-200">
   {% for post in collections.posts reversed %}<!--text-gray-800 -->
 
