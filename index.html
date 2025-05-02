@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <script src="https://cdn.tailwindcss.com"></script>
- <title>Kazuma Wada</title>
-</head>
-<body>
+---
+layout: layout.html
+---
 
 <div id="profile-container" class="m-5 text-center">
 
@@ -38,7 +32,7 @@
   <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">🛠️ 創作物</h2>
 
   <div class="flex bg-white p-4 rounded-lg shadow items-center space-x-4">
-    <!-- <img src="/img/readhostel.png" class="w-10 h-10" alt="icon"> -->
+    <img src="https://i.pinimg.com/736x/f2/8d/86/f28d863d6f7c76733750dee33ce065fe.jpg" class="w-10 h-10" alt="icon"> 
     <div>
       <a href="https://readhostel.vercel.app"><h3 class="text-blue-600 font-semibold">ホステル日記</h3></a>
       <p class="text-sm text-gray-600">海外のホステルに約2年間住んだ体験を文章にしてまとめたもの。</p>
@@ -47,7 +41,7 @@
 
 
   <div class="flex bg-white p-4 rounded-lg shadow items-center space-x-4">
-    <!-- <img src="/img/eigopencil.png" class="w-10 h-10" alt="icon"> -->
+    <img src="https://i.pinimg.com/736x/09/60/56/096056c1476c2dc2d23d5c38235e6c66.jpg" class="w-10 h-10" alt="icon">
     <div>
       <a href="https://eigopencil.com"><h3 class="text-blue-600 font-semibold">eigopencil.com</h3></a>
       <p class="text-sm text-gray-600">英語学習サイト。単語フレーズの管理ができます。</p>
@@ -61,10 +55,10 @@
 
 
  <!-- blog -->
-<div class="container mt-10">
+<!-- <div class="container mt-10">
   <h2 class="text-left text-2xl font-bold mb-4 text-gray-800 border-b pb-2">🖊️ブログ</h2>
  <div class="m-4 p-5 rounded-lg dulation-200">
-  {% for post in collections.posts reversed %}<!--text-gray-800 -->
+  {% for post in collections.posts reversed %}
 
   <div class="text-left mt-3">
    <p class="text-xs font-medium text-gray-500 ring-gray-500/10">{{post.data.date}}</p>
@@ -73,15 +67,13 @@
  
 
   {% endfor %}
-  </div>
+  </div> -->
 
 </div>
 
 
 
 
- <!-- <footer class="text-gray-400 text-center w-full bg-white fixed bottom-0 left-0 py-2">
-  <span>Handcrafted by Kazuma Wada & </span><span class="text-blue-600"><a href="https://11ty.dev">11ty</a></span> 
-</footer> -->
-</body>
-</html>
+ <footer class="text-gray-400 text-center w-full bg-white fixed bottom-0 left-0 py-2">
+  <span>Handcrafted by Kazuma Wada & </span><span class="text-blue-600"><a href="https://11ty.dev">11ty</a> ❤️</span> 
+</footer>
